@@ -6,6 +6,7 @@ import resume_screening from "../assets/resume_screening.png";
 import Movie_rec from "../assets/Movie_rec.png";
 import Weather_app from "../assets/Weather_app.png";
 import TicTacToe from "../assets/TicTacToe.png";
+import ZemaFm from "../assets/ZemaFM.png";
 
 const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -49,6 +50,14 @@ const Portfolio = () => {
       image: TicTacToe,
       link: "https://tictactoe-five-henna.vercel.app/",
       github: "https://github.com/henok3095/PRODIGY_TrackCode_03",
+      status: "Completed",
+    },
+    {
+      title: "Zema FM",
+      description: "Zema.fm is a modern and visually stunning Spotify stats platform that gives users deep insights into their music listening habits. Built with Angular and styled using Tailwind CSS, Zema.fm offers a sleek, dark-themed interface inspired by Spotify’s aesthetics while adding a creative and colorful twist.",
+      image: ZemaFm,
+      link: "https://zema-fm.vercel.app/",
+      github: "https://github.com/henok3095/Zema-FM",
       status: "Completed",
     },
   ];
