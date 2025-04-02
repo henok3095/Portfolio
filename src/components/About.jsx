@@ -1,18 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaCode, FaServer, FaPaintBrush } from "react-icons/fa";
-import '../styles.css'; // Import the CSS file
+import '../styles.css'; 
 
 const skillCategories = [
   {
     title: "Frontend Development",
     icon: <FaCode className="text-5xl text-yellow-400 drop-shadow-glow" />, 
-    skills: ["React", "JavaScript", "HTML & CSS", "Tailwind CSS", "Bootstrap"],
+    skills: ["React", "Angular", "JavaScript", "HTML & CSS", "Tailwind CSS", "Bootstrap"],
   },
   {
     title: "Backend Development",
     icon: <FaServer className="text-5xl text-green-400 drop-shadow-glow" />, 
-    skills: ["Node.js", "Express.js", "SQL server", "PostgreSQL", "MongoDB"],
+    skills: ["Node.js", ".NET","Express.js", "SQL server", "PostgreSQL", "MongoDB"],
   },
   {
     title: "UI/UX & Design",

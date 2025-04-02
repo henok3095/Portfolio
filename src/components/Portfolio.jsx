@@ -7,13 +7,14 @@ import Movie_rec from "../assets/Movie_rec.png";
 import Weather_app from "../assets/Weather_app.png";
 import TicTacToe from "../assets/TicTacToe.png";
 import ZemaFm from "../assets/ZemaFM.png";
+import { FaGithub } from "react-icons/fa";
 
 const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projects = [
     {
-      title: "Travel Blog Website", 
+      title: "Travel Blog Website",
       description: "A dynamic travel blogging platform with interactive UI and social sharing features.",
       image: travelblog_picture,
       link: "https://travelblogwebsite.vercel.app/",
@@ -54,7 +55,7 @@ const Portfolio = () => {
     },
     {
       title: "Zema FM",
-      description: "Zema.fm is a modern and visually stunning Spotify stats platform that gives users deep insights into their music listening habits. Built with Angular and styled using Tailwind CSS, Zema.fm offers a sleek, dark-themed interface inspired by Spotify’s aesthetics while adding a creative and colorful twist.",
+      description: "Zema.fm is a modern Spotify stats platform with deep insights into music habits.",
       image: ZemaFm,
       link: "https://zema-fm.vercel.app/",
       github: "https://github.com/henok3095/Zema-FM",
@@ -62,107 +63,213 @@ const Portfolio = () => {
     },
   ];
 
-  const projectAnimation = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+    hover: {
+      scale: 1.02, // Reduced from 1.05 to make it subtler
+      boxShadow: "0px 5px 10px rgba(0, 255, 255, 0.1)", // Reduced shadow intensity
+      transition: { duration: 0.2 }, // Shortened duration for less noticeable effect
+    },
+  };
+
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
   };
 
   return (
-    <section id="portfolio" className="py-20 bg-black relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-20 blur-3xl"></div>
-      
+    <section id="portfolio" className="py-20 bg-[#0A0A23] relative overflow-hidden min-h-screen">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1E1E3F] via-[#2A2A5A] to-[#3F3F7A] opacity-80"></div>
+
+      {[...Array(10)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-2 h-2 bg-cyan-400 rounded-full"
+          initial={{ x: `${Math.random() * 100}vw`, y: `${Math.random() * 100}vh` }}
+          animate={{
+            y: [0, -30, 0],
+            opacity: [0, 1, 0],
+          }}
+          transition={{
+            duration: Math.random() * 5 + 3,
+            repeat: Infinity,
+            delay: Math.random() * 2,
+          }}
+        />
+      ))}
+
       <motion.div
-        className="container mx-auto px-6 md:px-12"
+        className="container mx-auto px-6 md:px-12 relative z-10"
         variants={fadeIn}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.2 }}
       >
         <motion.h2
-          className="text-4xl md:text-6xl font-bold text-center mb-12 bg-gradient-to-r from-yellow-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
+          className="text-5xl md:text-7xl font-extrabold text-center mb-16 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
         >
-          My Projects
+          Projects
         </motion.h2>
-        <p className="text-gray-300 mt-4 text-center text-lg">
-          Explore some of the projects I've built with passion and creativity.
+        <p className="text-cyan-200 mt-4 text-center text-xl font-light">
+          Journey through my portfolio of projects.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-2xl transition-transform duration-300 relative group border border-gray-700"
-              variants={projectAnimation}
+              className="bg-[#1E1E3F]/80 rounded-3xl shadow-lg overflow-hidden border border-cyan-500/30 cursor-pointer flex flex-col"
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              whileHover="hover"
+              viewport={{ once: true }}
               onClick={() => setSelectedProject(project)}
             >
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-64 object-cover group-hover:opacity-75 transition-opacity duration-300 rounded-t-2xl"
+                className="w-full h-72 object-cover transition-transform duration-500 hover:scale-110 rounded-t-3xl"
               />
-              <div className="p-6 text-left">
-                <h3 className="text-2xl font-bold text-blue-400">{project.title}</h3>
-                <hr className="my-2 border-gray-500" />
-                <p className={`mt-2 ${project.status === "Completed" ? "text-green-500" : "text-red-500"}`}>
-                  {project.status}
-                </p>
-                
-                <p className="mt-2 text-gray-300">{project.description.substring(0, 60)}...</p>
-                
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                >
-                  See More
-                </button>
+              <div className="p-6 text-left flex flex-col justify-between flex-grow">
+                <div>
+                  <h3 className="text-2xl font-bold text-cyan-400">{project.title}</h3>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span
+                      className={`w-3 h-3 rounded-full ${
+                        project.status === "Completed" ? "bg-green-500" : "bg-red-500"
+                      }`}
+                    ></span>
+                    <p
+                      className={`text-sm ${
+                        project.status === "Completed" ? "text-green-400" : "text-red-400"
+                      }`}
+                    >
+                      {project.status}
+                    </p>
+                  </div>
+                  <p className="mt-3 text-gray-300">{project.description.substring(0, 60)}...</p>
+                </div>
+                <div className="mt-4 flex items-center gap-4">
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-cyan-500 text-black py-2 px-6 rounded-full font-semibold"
+                  >
+                    Explore
+                  </motion.button>
+                  <motion.a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="text-purple-400 hover:text-purple-300"
+                    title="View GitHub Repository"
+                  >
+                    <FaGithub className="text-3xl" />
+                  </motion.a>
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* "More Projects on GitHub" Section */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <p className="text-cyan-200 text-lg mb-4">
+            Want to see more? Check out my full collection of projects on GitHub!
+          </p>
+          <motion.a
+            href="https://github.com/henok3095" // Replace with your GitHub profile URL
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.1, boxShadow: "0px 0px 15px rgba(147, 51, 234, 0.7)" }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-3 bg-purple-500 text-white py-3 px-8 rounded-full font-bold text-lg shadow-lg hover:bg-purple-600 transition-colors duration-300"
+          >
+            <FaGithub className="text-2xl" />
+            More Projects on GitHub
+          </motion.a>
+        </motion.div>
       </motion.div>
 
       {selectedProject && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-[#2C3E50] text-[#ECF0F1] p-10 rounded-lg shadow-lg relative w-[90vw] max-w-[1000px] flex flex-col md:flex-row">
+        <motion.div
+          className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+          initial="hidden"
+          animate="visible"
+          variants={modalVariants}
+          onClick={() => setSelectedProject(null)}
+        >
+          <div
+            className="bg-[#1E1E3F]/95 text-white p-8 rounded-3xl shadow-2xl w-[90vw] max-w-[1100px] border border-cyan-500/50 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 text-[#F1C40F] font-bold text-2xl"
+              className="absolute top-4 right-4 text-cyan-400 font-bold text-3xl hover:text-cyan-200"
             >
-              &times;
+              ×
             </button>
-            <img
-              src={selectedProject.image}
-              alt={selectedProject.title}
-              className="w-full md:w-1/2 h-auto object-cover rounded-lg"
-            />
-            <div className="pl-0 md:pl-10 flex flex-col justify-between mt-6 md:mt-0">
-              <h2 className="text-3xl font-bold text-[#F1C40F]">{selectedProject.title}</h2>
-              <p className="mt-4">{selectedProject.description}</p>
-              <div className="mt-6 flex gap-4">
-                {selectedProject.link && (
-                  <a
-                    href={selectedProject.link}
+            <div className="flex flex-col md:flex-row gap-8">
+              <motion.img
+                src={selectedProject.image}
+                alt={selectedProject.title}
+                className="w-full md:w-1/2 h-auto object-cover rounded-2xl shadow-lg"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              />
+              <div className="flex flex-col justify-between">
+                <div>
+                  <h2 className="text-4xl font-bold text-cyan-400">{selectedProject.title}</h2>
+                  <p className="mt-4 text-gray-200">{selectedProject.description}</p>
+                </div>
+                <div className="mt-6 flex gap-4">
+                  {selectedProject.link && (
+                    <motion.a
+                      href={selectedProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1 }}
+                      className="bg-cyan-500 text-black py-3 px-6 rounded-full font-bold"
+                    >
+                      View Live
+                    </motion.a>
+                  )}
+                  {/* <motion.a
+                    href={selectedProject.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#F1C40F] text-[#2C3E50] py-2 px-4 rounded-lg font-bold hover:bg-[#D4AC0D]"
+                    whileHover={{ scale: 1.1 }}
+                    className="bg-purple-500 text-white py-3 px-6 rounded-full font-bold flex items-center gap-2"
                   >
-                    Visit Website
-                  </a>
-                )}
-                <a
-                  href={selectedProject.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#34495E] text-[#F1C40F] py-2 px-4 rounded-lg font-bold hover:bg-[#1C2833]"
-                >
-                  View GitHub Repo
-                </a>
+                    <FaGithub className="text-xl" /> GitHub Repo
+                  </motion.a> */}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </section>
   );
