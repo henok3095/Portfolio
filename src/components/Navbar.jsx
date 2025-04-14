@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion"; // Replacing lucide-react with framer-motion for animations
-import { FaBars, FaTimes } from "react-icons/fa"; // Using react-icons instead of lucide-react
+import { motion } from "framer-motion";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom"; // Import Link
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,7 +12,6 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  // Glitch effect for hover
   const glitchVariants = {
     hover: {
       textShadow: [
@@ -26,10 +26,8 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full bg-[#1E1E1E] text-white shadow-[0_0_15px_rgba(0,255,255,0.2)] z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Empty div for spacing */}
         <div className="hidden md:block w-40"></div>
 
-        {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-10 text-lg font-semibold">
           {["Home", "About", "Portfolio", "Contact"].map((item, index) => (
             <motion.li
@@ -38,16 +36,15 @@ const Navbar = () => {
               whileHover="hover"
               variants={glitchVariants}
             >
-              <a
-                href={`#${item === "Home" ? "hero" : item.toLowerCase()}`}
+              <Link
+                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                 className={`transition-colors duration-300 ${
                   activeItem === item ? "text-cyan-400" : "text-white"
                 }`}
                 onClick={() => handleMenuItemClick(item)}
               >
                 {item}
-              </a>
-              {/* Neon Underline */}
+              </Link>
               <motion.span
                 className="absolute left-0 bottom-[-4px] h-[2px] bg-gradient-to-r from-cyan-400 to-purple-400"
                 initial={{ width: 0 }}
@@ -59,10 +56,9 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* CV Button */}
         <motion.a
           href="https://drive.google.com/file/d/1v0yVaxIDJXVJcTZ5NMwCqhdyigcAdue1/view?usp=drive_link"
-          target="_blank" // Open in new tab instead of download since it's a Google Drive link
+          target="_blank"
           className="hidden md:inline-block relative bg-cyan-400 text-black px-6 py-2 rounded-lg font-semibold overflow-hidden group"
           whileHover={{ scale: 1.05, boxShadow: "0px 0px 10px rgba(0, 255, 255, 0.5)" }}
           whileTap={{ scale: 0.95 }}
@@ -71,7 +67,6 @@ const Navbar = () => {
           <span className="absolute inset-0 bg-cyan-500 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></span>
         </motion.a>
 
-        {/* Mobile Menu Button */}
         <motion.button
           className="md:hidden text-cyan-400 focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -82,7 +77,6 @@ const Navbar = () => {
         </motion.button>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
         <motion.div
           className="md:hidden bg-[#1E1E1E] py-6 px-6 absolute top-full left-0 w-full shadow-[0_0_15px_rgba(0,255,255,0.2)]"
@@ -98,15 +92,15 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05, color: "#00FFFF" }}
                 transition={{ duration: 0.2 }}
               >
-                <a
-                  href={`#${item === "Home" ? "hero" : item.toLowerCase()}`}
+                <Link
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                   className={`block transition-colors duration-300 ${
                     activeItem === item ? "text-cyan-400" : "text-white"
                   }`}
                   onClick={() => handleMenuItemClick(item)}
                 >
                   {item}
-                </a>
+                </Link>
               </motion.li>
             ))}
             <motion.li
