@@ -82,10 +82,10 @@ const Portfolio = () => {
       id="portfolio"
       className="relative min-h-screen flex flex-col items-center justify-center bg-[#1E1E1E] text-white py-20 px-6 md:px-12 overflow-hidden"
     >
-      {/* Subtle Grid Background */}
+    
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
 
-      {/* Floating Geometric Shapes */}
+     
       <motion.div
         className="absolute top-20 left-20 w-16 h-16 border-2 border-cyan-400 rotate-45 opacity-50"
         animate={{ rotate: 360, y: [0, -20, 0] }}
@@ -98,7 +98,7 @@ const Portfolio = () => {
       />
 
       <motion.div className="container mx-auto px-6 md:px-12 relative z-10">
-        {/* Heading with Neon Gradient */}
+        
         <motion.h2
           className="text-5xl md:text-7xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide"
           initial={{ opacity: 0, y: -50 }}
