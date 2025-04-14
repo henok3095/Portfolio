@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import fadeIn from "../utils/fadeIn";
 import travelblog_picture from "../assets/travel_blog.png";
 import resume_screening from "../assets/resume_screening.png";
 import Movie_rec from "../assets/Movie_rec.png";
@@ -64,84 +63,66 @@ const Portfolio = () => {
   ];
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
+    initial: { opacity: 0, y: 50 },
+    animate: { opacity: 1, y: 0 },
     hover: {
-      scale: 1.02, // Reduced from 1.05 to make it subtler
-      boxShadow: "0px 5px 10px rgba(0, 255, 255, 0.1)", // Reduced shadow intensity
-      transition: { duration: 0.2 }, // Shortened duration for less noticeable effect
+      scale: 1.02,
+      boxShadow: "0px 5px 15px rgba(0, 255, 255, 0.3)",
+      transition: { duration: 0.2 },
     },
   };
 
   const modalVariants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
   };
 
   return (
-    <section id="portfolio" className="py-20 bg-[#0A0A23] relative overflow-hidden min-h-screen">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1E1E3F] via-[#2A2A5A] to-[#3F3F7A] opacity-80"></div>
+    <section
+      id="portfolio"
+      className="relative min-h-screen flex flex-col items-center justify-center bg-[#1E1E1E] text-white py-20 px-6 md:px-12 overflow-hidden"
+    >
+      {/* Subtle Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:40px_40px] opacity-20"></div>
 
-      {[...Array(10)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 bg-cyan-400 rounded-full"
-          initial={{ x: `${Math.random() * 100}vw`, y: `${Math.random() * 100}vh` }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: Math.random() * 5 + 3,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
-        />
-      ))}
-
+      {/* Floating Geometric Shapes */}
       <motion.div
-        className="container mx-auto px-6 md:px-12 relative z-10"
-        variants={fadeIn}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
+        className="absolute top-20 left-20 w-16 h-16 border-2 border-cyan-400 rotate-45 opacity-50"
+        animate={{ rotate: 360, y: [0, -20, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-20 w-24 h-24 border-2 border-purple-400 rounded-full opacity-50"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <motion.div className="container mx-auto px-6 md:px-12 relative z-10">
+        {/* Heading with Neon Gradient */}
         <motion.h2
-          className="text-5xl md:text-7xl font-extrabold text-center mb-16 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
+          className="text-5xl md:text-7xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
           Projects
         </motion.h2>
-        <p className="text-cyan-200 mt-4 text-center text-xl font-light">
-          Journey through my portfolio of projects.
-        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              className="bg-[#1E1E3F]/80 rounded-3xl shadow-lg overflow-hidden border border-cyan-500/30 cursor-pointer flex flex-col"
+              className="bg-[#2A2A2A] rounded-xl border border-cyan-400/30 shadow-lg overflow-hidden cursor-pointer flex flex-col relative group"
               variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
+              initial="initial"
+              animate={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: index * 0.2 } }}
               whileHover="hover"
-              viewport={{ once: true }}
               onClick={() => setSelectedProject(project)}
             >
               <img
                 src={project.image}
                 alt={project.title}
-                className="w-full h-72 object-cover transition-transform duration-500 hover:scale-110 rounded-t-3xl"
+                className="w-full h-72 object-cover rounded-t-xl"
               />
               <div className="p-6 text-left flex flex-col justify-between flex-grow">
                 <div>
@@ -160,29 +141,32 @@ const Portfolio = () => {
                       {project.status}
                     </p>
                   </div>
-                  <p className="mt-3 text-gray-300">{project.description.substring(0, 60)}...</p>
+                  <p className="mt-3 text-gray-400 tracking-wide">{project.description.substring(0, 60)}...</p>
                 </div>
                 <div className="mt-4 flex items-center gap-4">
                   <motion.button
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.1, boxShadow: "0px 0px 10px rgba(0, 255, 255, 0.5)" }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-cyan-500 text-black py-2 px-6 rounded-full font-semibold"
+                    className="relative bg-cyan-400 text-black py-2 px-6 rounded-full font-semibold overflow-hidden group"
                   >
-                    Explore
+                    <span className="relative z-10">Explore</span>
+                    <span className="absolute inset-0 bg-cyan-500 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></span>
                   </motion.button>
                   <motion.a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.2, rotate: 5 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="text-purple-400 hover:text-purple-300"
+                    whileHover={{ scale: 1.1, boxShadow: "0px 0px 10px rgba(255, 0, 255, 0.5)" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-purple-400"
                     title="View GitHub Repository"
                   >
                     <FaGithub className="text-3xl" />
                   </motion.a>
                 </div>
               </div>
+              {/* Subtle Hover Overlay */}
+              <span className="absolute inset-0 bg-cyan-400 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
             </motion.div>
           ))}
         </div>
@@ -191,23 +175,21 @@ const Portfolio = () => {
         <motion.div
           className="mt-16 text-center"
           initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <p className="text-cyan-200 text-lg mb-4">
-            Want to see more? Check out my full collection of projects on GitHub!
-          </p>
           <motion.a
-            href="https://github.com/henok3095" // Replace with your GitHub profile URL
+            href="https://github.com/henok3095"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.1, boxShadow: "0px 0px 15px rgba(147, 51, 234, 0.7)" }}
+            whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(147, 51, 234, 0.7)" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 bg-purple-500 text-white py-3 px-8 rounded-full font-bold text-lg shadow-lg hover:bg-purple-600 transition-colors duration-300"
+            className="relative inline-flex items-center gap-3 bg-purple-400 text-black py-3 px-8 rounded-full font-bold text-lg overflow-hidden group"
           >
-            <FaGithub className="text-2xl" />
-            More Projects on GitHub
+            <span className="relative z-10">
+              <FaGithub className="inline text-2xl mr-2" /> More Projects on GitHub
+            </span>
+            <span className="absolute inset-0 bg-purple-500 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></span>
           </motion.a>
         </motion.div>
       </motion.div>
@@ -221,7 +203,7 @@ const Portfolio = () => {
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className="bg-[#1E1E3F]/95 text-white p-8 rounded-3xl shadow-2xl w-[90vw] max-w-[1100px] border border-cyan-500/50 relative"
+            className="bg-[#2A2A2A] text-white p-8 rounded-xl shadow-2xl w-[90vw] max-w-[1100px] border border-cyan-400/30 relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -234,7 +216,7 @@ const Portfolio = () => {
               <motion.img
                 src={selectedProject.image}
                 alt={selectedProject.title}
-                className="w-full md:w-1/2 h-auto object-cover rounded-2xl shadow-lg"
+                className="w-full md:w-1/2 h-auto object-cover rounded-xl shadow-lg"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
@@ -242,7 +224,7 @@ const Portfolio = () => {
               <div className="flex flex-col justify-between">
                 <div>
                   <h2 className="text-4xl font-bold text-cyan-400">{selectedProject.title}</h2>
-                  <p className="mt-4 text-gray-200">{selectedProject.description}</p>
+                  <p className="mt-4 text-gray-400 tracking-wide">{selectedProject.description}</p>
                 </div>
                 <div className="mt-6 flex gap-4">
                   {selectedProject.link && (
@@ -250,21 +232,25 @@ const Portfolio = () => {
                       href={selectedProject.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }}
-                      className="bg-cyan-500 text-black py-3 px-6 rounded-full font-bold"
+                      whileHover={{ scale: 1.1, boxShadow: "0px 0px 10px rgba(0, 255, 255, 0.5)" }}
+                      whileTap={{ scale: 0.95 }}
+                      className="relative bg-cyan-400 text-black py-3 px-6 rounded-full font-bold overflow-hidden group"
                     >
-                      View Live
+                      <span className="relative z-10">View Live</span>
+                      <span className="absolute inset-0 bg-cyan-500 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></span>
                     </motion.a>
                   )}
-                  {/* <motion.a
+                  <motion.a
                     href={selectedProject.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1 }}
-                    className="bg-purple-500 text-white py-3 px-6 rounded-full font-bold flex items-center gap-2"
+                    whileHover={{ scale: 1.1, boxShadow: "0px 0px 10px rgba(255, 0, 255, 0.5)" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative bg-purple-400 text-black py-3 px-6 rounded-full font-bold overflow-hidden group"
                   >
-                    <FaGithub className="text-xl" /> GitHub Repo
-                  </motion.a> */}
+                    <span className="relative z-10">GitHub Repo</span>
+                    <span className="absolute inset-0 bg-purple-500 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></span>
+                  </motion.a>
                 </div>
               </div>
             </div>
