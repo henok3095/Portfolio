@@ -17,14 +17,14 @@ class ClippingContext {
 	/**
 	 * Constructs a new clipping context.
 	 *
-	 * @param {ClippingContext?} [parentContext=null] - A reference to the parent clipping context.
+	 * @param {?ClippingContext} [parentContext=null] - A reference to the parent clipping context.
 	 */
 	constructor( parentContext = null ) {
 
 		/**
 		 * The clipping context's version.
 		 *
-		 * @type {Number}
+		 * @type {number}
 		 * @readonly
 		 */
 		this.version = 0;
@@ -32,7 +32,7 @@ class ClippingContext {
 		/**
 		 * Whether the intersection of the clipping planes is used to clip objects, rather than their union.
 		 *
-		 * @type {Boolean?}
+		 * @type {?boolean}
 		 * @default null
 		 */
 		this.clipIntersection = null;
@@ -40,14 +40,14 @@ class ClippingContext {
 		/**
 		 * The clipping context's cache key.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 */
 		this.cacheKey = '';
 
 		/**
 		 * Whether the shadow pass is active or not.
 		 *
-		 * @type {Boolean}
+		 * @type {boolean}
 		 * @default false
 		 */
 		this.shadowPass = false;
@@ -83,7 +83,7 @@ class ClippingContext {
 		/**
 		 * The version of the clipping context's parent context.
 		 *
-		 * @type {Number?}
+		 * @type {?number}
 		 * @readonly
 		 */
 		this.parentVersion = null;
@@ -106,7 +106,7 @@ class ClippingContext {
 	 *
 	 * @param {Array<Plane>} source - The source clipping planes.
 	 * @param {Array<Vector4>} destination - The destination.
-	 * @param {Number} offset - The offset.
+	 * @param {number} offset - The offset.
 	 */
 	projectPlanes( source, destination, offset ) {
 
@@ -136,7 +136,7 @@ class ClippingContext {
 	 */
 	updateGlobal( scene, camera ) {
 
-		this.shadowPass = ( scene.overrideMaterial !== null && scene.overrideMaterial.isShadowNodeMaterial );
+		this.shadowPass = ( scene.overrideMaterial !== null && scene.overrideMaterial.isShadowPassMaterial );
 		this.viewMatrix = camera.matrixWorldInverse;
 
 		this.viewNormalMatrix.getNormalMatrix( this.viewMatrix );
@@ -248,7 +248,7 @@ class ClippingContext {
 	/**
 	 * The count of union clipping planes.
 	 *
-	 * @type {Number}
+	 * @type {number}
 	 * @readonly
 	 */
 	get unionClippingCount() {

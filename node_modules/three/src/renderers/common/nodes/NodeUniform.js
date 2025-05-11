@@ -1,6 +1,6 @@
 import {
 	NumberUniform, Vector2Uniform, Vector3Uniform, Vector4Uniform,
-	ColorUniform, Matrix3Uniform, Matrix4Uniform
+	ColorUniform, Matrix2Uniform, Matrix3Uniform, Matrix4Uniform
 } from '../Uniform.js';
 
 /**
@@ -33,7 +33,7 @@ class NumberNodeUniform extends NumberUniform {
 	/**
 	 * Overwritten to return the value of the node uniform.
 	 *
-	 * @return {Number} The value.
+	 * @return {number} The value.
 	 */
 	getValue() {
 
@@ -44,7 +44,7 @@ class NumberNodeUniform extends NumberUniform {
 	/**
 	 * Returns the node uniform data type.
 	 *
-	 * @return {String} The data type.
+	 * @return {string} The data type.
 	 */
 	getType() {
 
@@ -95,7 +95,7 @@ class Vector2NodeUniform extends Vector2Uniform {
 	/**
 	 * Returns the node uniform data type.
 	 *
-	 * @return {String} The data type.
+	 * @return {string} The data type.
 	 */
 	getType() {
 
@@ -146,7 +146,7 @@ class Vector3NodeUniform extends Vector3Uniform {
 	/**
 	 * Returns the node uniform data type.
 	 *
-	 * @return {String} The data type.
+	 * @return {string} The data type.
 	 */
 	getType() {
 
@@ -197,7 +197,7 @@ class Vector4NodeUniform extends Vector4Uniform {
 	/**
 	 * Returns the node uniform data type.
 	 *
-	 * @return {String} The data type.
+	 * @return {string} The data type.
 	 */
 	getType() {
 
@@ -248,7 +248,59 @@ class ColorNodeUniform extends ColorUniform {
 	/**
 	 * Returns the node uniform data type.
 	 *
-	 * @return {String} The data type.
+	 * @return {string} The data type.
+	 */
+	getType() {
+
+		return this.nodeUniform.type;
+
+	}
+
+}
+
+
+/**
+ * A special form of Matrix2 uniform binding type.
+ * It's value is managed by a node object.
+ *
+ * @private
+ * @augments Matrix2Uniform
+ */
+class Matrix2NodeUniform extends Matrix2Uniform {
+
+	/**
+	 * Constructs a new node-based Matrix2 uniform.
+	 *
+	 * @param {NodeUniform} nodeUniform - The node uniform.
+	 */
+	constructor( nodeUniform ) {
+
+		super( nodeUniform.name, nodeUniform.value );
+
+		/**
+		 * The node uniform.
+		 *
+		 * @type {NodeUniform}
+		 */
+		this.nodeUniform = nodeUniform;
+
+	}
+
+	/**
+	 * Overwritten to return the value of the node uniform.
+	 *
+	 * @return {Matrix2} The value.
+	 */
+	getValue() {
+
+		return this.nodeUniform.value;
+
+	}
+
+	/**
+	 * Returns the node uniform data type.
+	 *
+	 * @return {string} The data type.
 	 */
 	getType() {
 
@@ -299,7 +351,7 @@ class Matrix3NodeUniform extends Matrix3Uniform {
 	/**
 	 * Returns the node uniform data type.
 	 *
-	 * @return {String} The data type.
+	 * @return {string} The data type.
 	 */
 	getType() {
 
@@ -350,7 +402,7 @@ class Matrix4NodeUniform extends Matrix4Uniform {
 	/**
 	 * Returns the node uniform data type.
 	 *
-	 * @return {String} The data type.
+	 * @return {string} The data type.
 	 */
 	getType() {
 
@@ -362,5 +414,5 @@ class Matrix4NodeUniform extends Matrix4Uniform {
 
 export {
 	NumberNodeUniform, Vector2NodeUniform, Vector3NodeUniform, Vector4NodeUniform,
-	ColorNodeUniform, Matrix3NodeUniform, Matrix4NodeUniform
+	ColorNodeUniform, Matrix2NodeUniform, Matrix3NodeUniform, Matrix4NodeUniform
 };
