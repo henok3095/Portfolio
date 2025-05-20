@@ -10,9 +10,11 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: undefined,
+        format: 'es'
       }
-    }
+    },
+    sourcemap: true
   },
   server: {
     port: 3000,
