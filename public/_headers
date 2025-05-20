@@ -1,0 +1,15 @@
+/*.js
+  Content-Type: application/javascript
+  X-Content-Type-Options: nosniff
+
+/*.mjs
+  Content-Type: application/javascript
+  X-Content-Type-Options: nosniff
+
+/*.jsx
+  Content-Type: application/javascript
+  X-Content-Type-Options: nosniff
+
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block 

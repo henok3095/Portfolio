@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import travelblog_picture from "../assets/travelblog_picture.png";
+import travelblog_picture from "../assets/travel_blog.png";
 import resume_screening from "../assets/resume_screening.png";
 import Movie_rec from "../assets/Movie_rec.png";
 import Weather_app from "../assets/Weather_app.png";
