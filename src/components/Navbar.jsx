@@ -1,16 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom"; // Import Link
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Home");
 
-  const handleMenuItemClick = (item) => {
-    setActiveItem(item);
-    setMenuOpen(false);
+  // Smooth scroll to section
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setActiveItem(sectionId.charAt(0).toUpperCase() + sectionId.slice(1));
+      setMenuOpen(false);
+    }
   };
+
+  // Detect which section is in view and update active item
+  useEffect(() => {
+    const sections = ["home", "about", "portfolio", "contact"];
+    const observerOptions = {
+      root: null,
+      threshold: 0.5, // Trigger when 50% of the section is in view
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          setActiveItem(sectionId.charAt(0).toUpperCase() + sectionId.slice(1));
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sections.forEach((sectionId) => {
+      const section = document.getElementById(sectionId);
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
 
   const glitchVariants = {
     hover: {
@@ -36,15 +72,18 @@ const Navbar = () => {
               whileHover="hover"
               variants={glitchVariants}
             >
-              <Link
-                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+              <a
+                href={`#${item.toLowerCase()}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(item.toLowerCase());
+                }}
                 className={`transition-colors duration-300 ${
                   activeItem === item ? "text-cyan-400" : "text-white"
                 }`}
-                onClick={() => handleMenuItemClick(item)}
               >
                 {item}
-              </Link>
+              </a>
               <motion.span
                 className="absolute left-0 bottom-[-4px] h-[2px] bg-gradient-to-r from-cyan-400 to-purple-400"
                 initial={{ width: 0 }}
@@ -59,6 +98,7 @@ const Navbar = () => {
         <motion.a
           href="https://drive.google.com/file/d/1v0yVaxIDJXVJcTZ5NMwCqhdyigcAdue1/view?usp=drive_link"
           target="_blank"
+          rel="noopener noreferrer"
           className="hidden md:inline-block relative bg-cyan-400 text-black px-6 py-2 rounded-lg font-semibold overflow-hidden group"
           whileHover={{ scale: 1.05, boxShadow: "0px 0px 10px rgba(0, 255, 255, 0.5)" }}
           whileTap={{ scale: 0.95 }}
@@ -92,15 +132,18 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05, color: "#00FFFF" }}
                 transition={{ duration: 0.2 }}
               >
-                <Link
-                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                <a
+                  href={`#${item.toLowerCase()}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.toLowerCase());
+                  }}
                   className={`block transition-colors duration-300 ${
                     activeItem === item ? "text-cyan-400" : "text-white"
                   }`}
-                  onClick={() => handleMenuItemClick(item)}
                 >
                   {item}
-                </Link>
+                </a>
               </motion.li>
             ))}
             <motion.li
