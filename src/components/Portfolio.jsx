@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import travelblog_picture from "../assets/travel_blog.png";
-import resume_screening from "../assets/resume_screening.png";
+import resume_screening from "../assets/Resume_screening.png";
 import Movie_rec from "../assets/Movie_rec.png";
 import Weather_app from "../assets/Weather_app.png";
-import TicTacToe from "../assets/TicTacToe.png";
-import ZemaFm from "../assets/ZemaFM.png";
+import TicTacToe from "../assets/tictactoe.png";
+import ZemaFm from "../assets/ZemaFm.png";
 import { FaGithub } from "react-icons/fa";
 
 const Portfolio = () => {
